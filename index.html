@@ -450,6 +450,27 @@
             font-style: italic;
         }
 
+        .feature-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .feature-badge-core {
+            background: var(--sage);
+            color: white;
+        }
+
+        .feature-badge-optional {
+            background: rgba(120, 113, 108, 0.15);
+            color: var(--stone);
+        }
+
         /* How it works */
         .how-it-works {
             padding: 100px 0;
@@ -886,32 +907,35 @@
                 </div>
                 <div class="features-grid">
                     <div class="feature">
+                        <span class="feature-badge feature-badge-core">Kernfeature</span>
                         <div class="feature-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                             </svg>
                         </div>
-                        <h3>Absolute Privatsphäre</h3>
-                        <p>Deine Audiodaten verlassen niemals deinen Computer. Keine Cloud, keine Uploads, keine Kompromisse.</p>
+                        <h3>100% Lokal</h3>
+                        <p>Deine Stimme bleibt auf deinem PC. Keine Cloud, keine Uploads, keine Datenübertragung.</p>
                     </div>
                     <div class="feature">
+                        <span class="feature-badge feature-badge-core">Kernfeature</span>
                         <div class="feature-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                             </svg>
                         </div>
-                        <h3>Schnelle Verarbeitung</h3>
-                        <p>Lokale KI bedeutet keine Wartezeit auf Server. Dein Text erscheint direkt nach dem Sprechen.</p>
-                        <span class="note">Geschwindigkeit abhängig von deiner Hardware</span>
+                        <h3>Schnell</h3>
+                        <p>Keine Wartezeit auf Server. Dein Text erscheint direkt nach dem Sprechen.</p>
+                        <span class="note">Abhängig von deiner Hardware</span>
                     </div>
                     <div class="feature">
+                        <span class="feature-badge feature-badge-core">Kernfeature</span>
                         <div class="feature-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
                             </svg>
                         </div>
-                        <h3>Kinderleicht</h3>
-                        <p>Taste drücken, sprechen, loslassen. Der Text erscheint automatisch dort, wo dein Cursor steht.</p>
+                        <h3>Einfach</h3>
+                        <p>Taste drücken, sprechen, loslassen. Der Text erscheint dort, wo dein Cursor steht.</p>
                     </div>
                     <div class="feature">
                         <div class="feature-icon">
@@ -920,7 +944,7 @@
                             </svg>
                         </div>
                         <h3>24 Sprachen</h3>
-                        <p>Deutsch, Englisch, Französisch, Spanisch und viele mehr — wählbar oder automatisch erkannt.</p>
+                        <p>Deutsch, Englisch, Französisch, Spanisch und mehr — wählbar oder automatisch erkannt.</p>
                     </div>
                     <div class="feature">
                         <div class="feature-icon">
@@ -928,17 +952,18 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                             </svg>
                         </div>
-                        <h3>Einfache Installation</h3>
-                        <p>Ein Installer, alles dabei. Keine zusätzlichen Downloads, keine Konfiguration nötig.</p>
+                        <h3>Sofort startklar</h3>
+                        <p>Ein Installer, alles dabei. Keine zusätzlichen Downloads nötig, keine Konfiguration.</p>
                     </div>
                     <div class="feature">
+                        <span class="feature-badge feature-badge-optional">Optional</span>
                         <div class="feature-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
                             </svg>
                         </div>
                         <h3>Weitere Modelle</h3>
-                        <p>Wähle aus verschiedenen Sprachmodellen — direkt in der App herunterladbar, je nach Qualitäts- und Geschwindigkeitsanforderung.</p>
+                        <p>Grössere Modelle für bessere Qualität — direkt in der App herunterladbar.</p>
                     </div>
                 </div>
             </div>
