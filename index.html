@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voxly - Lokale Spracherkennung</title>
-    <meta name="description" content="Voxly - Sprache zu Text, 100% lokal. Keine Cloud, keine Daten die das Gerät verlassen.">
+    <title>Voxly — Sprache zu Text, komplett lokal</title>
+    <meta name="description" content="Voxly verwandelt deine Stimme in Text. 100% lokal, keine Cloud, keine Daten die dein Gerät verlassen.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0a0a0f;
-            --bg-card: #12121a;
-            --accent: #6366f1;
-            --accent-light: #818cf8;
-            --text: #e4e4e7;
-            --text-muted: #71717a;
-            --success: #22c55e;
+            --cream: #FAF7F2;
+            --warm-white: #FFFCF7;
+            --ink: #1C1917;
+            --ink-light: #44403C;
+            --stone: #78716C;
+            --terracotta: #C2410C;
+            --terracotta-light: #EA580C;
+            --sage: #4D7C0F;
+            --sage-light: #84CC16;
         }
 
         * {
@@ -26,24 +28,43 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text);
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--cream);
+            color: var(--ink);
             line-height: 1.6;
-            min-height: 100vh;
+            font-size: 17px;
+            overflow-x: hidden;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 clamp(24px, 5vw, 64px);
         }
 
         /* Header */
         header {
-            padding: 24px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 28px 0;
+            position: relative;
         }
 
         .header-content {
@@ -53,300 +74,754 @@
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 400;
+            color: var(--ink);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            letter-spacing: -0.02em;
+            transition: color 0.3s ease;
         }
 
-        .logo-icon {
-            font-size: 1.8rem;
+        .logo:hover {
+            color: var(--terracotta);
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
         }
 
         nav a {
-            color: var(--text-muted);
+            color: var(--stone);
             text-decoration: none;
-            margin-left: 32px;
-            font-size: 0.95rem;
-            transition: color 0.2s;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--terracotta);
+            transition: width 0.3s ease;
         }
 
         nav a:hover {
-            color: var(--text);
+            color: var(--ink);
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         /* Hero */
         .hero {
-            padding: 100px 0 80px;
-            text-align: center;
+            padding: 80px 0 120px;
+            position: relative;
         }
 
-        .badge {
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+        }
+
+        .hero-eyebrow {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: var(--success);
-            padding: 8px 16px;
-            border-radius: 100px;
+            gap: 10px;
+            color: var(--sage);
             font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 32px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
         }
 
-        .badge-dot {
+        .hero-eyebrow::before {
+            content: '';
             width: 8px;
             height: 8px;
-            background: var(--success);
+            background: var(--sage-light);
             border-radius: 50%;
-            animation: pulse 2s infinite;
+            animation: breathe 3s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
         }
 
         h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 28px;
+            color: var(--ink);
         }
 
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 48px;
+        h1 em {
+            font-style: italic;
+            color: var(--terracotta);
         }
 
-        .cta-buttons {
+        .hero-description {
+            font-size: 1.15rem;
+            color: var(--ink-light);
+            line-height: 1.7;
+            max-width: 480px;
+            margin-bottom: 40px;
+        }
+
+        .cta-group {
             display: flex;
             gap: 16px;
-            justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
         }
 
-        .btn {
+        .btn-primary {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 16px 32px;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
+            gap: 10px;
+            padding: 18px 32px;
+            background: var(--ink);
+            color: var(--cream);
             text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 60px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 24px rgba(28, 25, 23, 0.15);
         }
 
         .btn-primary:hover {
-            background: var(--accent-light);
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(28, 25, 23, 0.2);
+            background: var(--terracotta);
         }
 
-        .btn-secondary {
-            background: rgba(255,255,255,0.05);
-            color: var(--text);
-            border: 1px solid rgba(255,255,255,0.1);
+        .btn-primary svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.1);
+        .btn-primary:hover svg {
+            transform: translateY(2px);
+        }
+
+        .btn-ghost {
+            color: var(--ink-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 18px 24px;
+            transition: color 0.3s ease;
+        }
+
+        .btn-ghost:hover {
+            color: var(--ink);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .visual-card {
+            background: var(--warm-white);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow:
+                0 1px 2px rgba(28, 25, 23, 0.04),
+                0 4px 16px rgba(28, 25, 23, 0.06),
+                0 24px 64px rgba(28, 25, 23, 0.08);
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            transform: rotate(2deg);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .visual-card:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .waveform {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 80px;
+            margin-bottom: 32px;
+        }
+
+        .waveform span {
+            width: 4px;
+            background: var(--terracotta);
+            border-radius: 4px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+
+        .waveform span:nth-child(1) { height: 20%; animation-delay: 0s; }
+        .waveform span:nth-child(2) { height: 45%; animation-delay: 0.1s; }
+        .waveform span:nth-child(3) { height: 75%; animation-delay: 0.2s; }
+        .waveform span:nth-child(4) { height: 100%; animation-delay: 0.3s; }
+        .waveform span:nth-child(5) { height: 65%; animation-delay: 0.4s; }
+        .waveform span:nth-child(6) { height: 85%; animation-delay: 0.5s; }
+        .waveform span:nth-child(7) { height: 55%; animation-delay: 0.6s; }
+        .waveform span:nth-child(8) { height: 35%; animation-delay: 0.7s; }
+        .waveform span:nth-child(9) { height: 70%; animation-delay: 0.8s; }
+        .waveform span:nth-child(10) { height: 40%; animation-delay: 0.9s; }
+        .waveform span:nth-child(11) { height: 25%; animation-delay: 1s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.5); }
+        }
+
+        .visual-text {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            color: var(--ink);
+            text-align: center;
+        }
+
+        .visual-text .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: var(--terracotta);
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .visual-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: var(--sage);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            box-shadow: 0 4px 16px rgba(77, 124, 15, 0.3);
         }
 
         /* Features */
         .features {
-            padding: 80px 0;
+            padding: 120px 0;
+            background: var(--warm-white);
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, var(--cream), var(--stone));
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--stone);
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            color: var(--ink);
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
         }
 
-        .feature-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 32px;
-            transition: border-color 0.2s;
+        .feature {
+            padding: 40px 32px;
+            border-radius: 20px;
+            background: var(--cream);
+            border: 1px solid rgba(120, 113, 108, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .feature-card:hover {
-            border-color: rgba(255,255,255,0.1);
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--terracotta);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(28, 25, 23, 0.08);
+        }
+
+        .feature:hover::before {
+            transform: scaleX(1);
         }
 
         .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--terracotta);
         }
 
-        .feature-card h3 {
-            font-size: 1.25rem;
+        .feature-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke-width: 1.5;
+        }
+
+        .feature h3 {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.35rem;
+            font-weight: 400;
             margin-bottom: 12px;
+            color: var(--ink);
         }
 
-        .feature-card p {
-            color: var(--text-muted);
+        .feature p {
+            color: var(--ink-light);
             font-size: 0.95rem;
+            line-height: 1.7;
         }
 
         /* How it works */
         .how-it-works {
-            padding: 80px 0;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 120px 0;
+            background: var(--cream);
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 48px;
-        }
-
-        .steps {
-            display: flex;
-            justify-content: center;
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 48px;
-            flex-wrap: wrap;
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--stone), transparent);
         }
 
         .step {
             text-align: center;
-            max-width: 200px;
+            position: relative;
         }
 
         .step-number {
-            width: 48px;
-            height: 48px;
-            background: var(--accent);
-            color: white;
-            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1.25rem;
-            margin: 0 auto 16px;
+            background: var(--warm-white);
+            border: 2px solid var(--ink);
+            border-radius: 50%;
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 2rem;
+            color: var(--ink);
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
         }
 
-        .step h4 {
-            margin-bottom: 8px;
+        .step:hover .step-number {
+            background: var(--ink);
+            color: var(--cream);
+            transform: scale(1.1);
+        }
+
+        .step h3 {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 12px;
         }
 
         .step p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            color: var(--ink-light);
+            font-size: 0.95rem;
         }
 
-        /* Privacy highlight */
-        .privacy-section {
-            padding: 80px 0;
+        .step-key {
+            display: inline-block;
+            background: var(--ink);
+            color: var(--cream);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-family: 'DM Sans', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 12px;
         }
 
-        .privacy-box {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            border-radius: 24px;
-            padding: 64px;
-            text-align: center;
+        /* Editions */
+        .editions {
+            padding: 120px 0;
+            background: var(--cream);
         }
 
-        .privacy-box h2 {
-            font-size: 2rem;
-            margin-bottom: 16px;
-        }
-
-        .privacy-box p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 32px;
-        }
-
-        .privacy-features {
-            display: flex;
-            justify-content: center;
+        .editions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 32px;
-            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .privacy-feature {
+        .edition-card {
+            background: var(--warm-white);
+            border: 1px solid rgba(120, 113, 108, 0.15);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .edition-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(28, 25, 23, 0.1);
+        }
+
+        .edition-premium {
+            border-color: var(--terracotta);
+            border-width: 2px;
+        }
+
+        .edition-badge {
+            display: inline-block;
+            background: var(--sage);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            margin-bottom: 20px;
+        }
+
+        .edition-badge-soon {
+            background: var(--terracotta);
+        }
+
+        .edition-card h3 {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .edition-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
+        .edition-desc {
+            color: var(--stone);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .edition-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .edition-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(120, 113, 108, 0.1);
+            color: var(--ink-light);
+            font-size: 0.95rem;
+        }
+
+        .edition-features li:last-child {
+            border-bottom: none;
+        }
+
+        .btn-edition {
+            display: block;
+            text-align: center;
+            padding: 16px 24px;
+            background: var(--ink);
+            color: var(--cream);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edition:hover {
+            background: var(--terracotta);
+        }
+
+        .btn-disabled {
+            background: var(--stone);
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-disabled:hover {
+            background: var(--stone);
+        }
+
+        @media (max-width: 768px) {
+            .editions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Privacy */
+        .privacy {
+            padding: 120px 0;
+            background: var(--ink);
+            color: var(--cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .privacy::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(194, 65, 12, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .privacy-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .privacy h2 {
+            color: var(--cream);
+            margin-bottom: 24px;
+        }
+
+        .privacy-description {
+            font-size: 1.1rem;
+            color: rgba(250, 247, 242, 0.75);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .privacy-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .privacy-list li {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--success);
+            gap: 12px;
             font-weight: 500;
+        }
+
+        .privacy-list svg {
+            width: 24px;
+            height: 24px;
+            color: var(--sage-light);
+            flex-shrink: 0;
+        }
+
+        .privacy-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shield-icon {
+            width: 200px;
+            height: 200px;
+            color: var(--terracotta);
+            opacity: 0.9;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         /* Footer */
         footer {
-            padding: 48px 0;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
+            padding: 60px 0;
+            background: var(--cream);
+            border-top: 1px solid rgba(120, 113, 108, 0.15);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.25rem;
+            color: var(--ink);
         }
 
         .footer-links {
             display: flex;
-            justify-content: center;
-            gap: 32px;
-            margin-bottom: 24px;
+            gap: 40px;
         }
 
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--stone);
             text-decoration: none;
             font-size: 0.9rem;
+            transition: color 0.3s ease;
         }
 
         .footer-links a:hover {
-            color: var(--text);
+            color: var(--ink);
         }
 
-        .copyright {
-            color: var(--text-muted);
+        .footer-copy {
+            color: var(--stone);
             font-size: 0.85rem;
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .privacy-content {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .privacy-visual {
+                order: -1;
+            }
+
+            .shield-icon {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            nav a {
-                margin-left: 16px;
-            }
-
-            nav a:first-child {
-                margin-left: 0;
+            nav {
+                display: none;
             }
 
             .hero {
-                padding: 60px 0 40px;
+                padding: 40px 0 80px;
             }
 
-            .privacy-box {
-                padding: 40px 24px;
+            .features-grid {
+                grid-template-columns: 1fr;
             }
 
-            .steps {
-                gap: 32px;
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .steps-container::before {
+                display: none;
+            }
+
+            .privacy-list {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .footer-links {
+                gap: 24px;
             }
         }
     </style>
@@ -355,14 +830,12 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="/" class="logo">
-                    <span class="logo-icon">🎤</span>
-                    <span>Voxly</span>
-                </a>
+                <a href="/" class="logo">Voxly <span style="font-family: 'DM Sans', sans-serif; font-size: 0.65rem; font-weight: 500; color: var(--stone); margin-left: 8px; letter-spacing: 0.05em;">by Aebionix</span></a>
                 <nav>
                     <a href="#features">Features</a>
-                    <a href="#how-it-works">So funktioniert's</a>
-                    <a href="https://github.com/aebionix/voxly-releases" target="_blank">GitHub</a>
+                    <a href="#editions">Editionen</a>
+                    <a href="#how-it-works">Anleitung</a>
+                    <a href="https://github.com/aebionix/voxly-releases" target="_blank" rel="noopener">GitHub</a>
                 </nav>
             </div>
         </div>
@@ -371,58 +844,104 @@
     <main>
         <section class="hero">
             <div class="container">
-                <div class="badge">
-                    <span class="badge-dot"></span>
-                    100% Lokal - Keine Internetverbindung nötig
-                </div>
-                <h1>Sprache zu Text.<br>Komplett offline.</h1>
-                <p class="hero-subtitle">
-                    Drücke einen Hotkey, sprich, und der Text erscheint automatisch.
-                    Keine Cloud, keine Daten die dein Gerät verlassen. Niemals.
-                </p>
-                <div class="cta-buttons">
-                    <a href="https://github.com/aebionix/voxly-releases/releases/latest" class="btn btn-primary">
-                        ⬇️ Download für Windows
-                    </a>
-                    <a href="#how-it-works" class="btn btn-secondary">
-                        Mehr erfahren
-                    </a>
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <div class="hero-eyebrow">Funktioniert ohne Internet</div>
+                        <h1>Deine Stimme,<br><em>dein Text.</em><br>Lokal.</h1>
+                        <p class="hero-description">
+                            Sprich einfach — Voxly transkribiert in Echtzeit.
+                            Keine Cloud, keine Server, keine Sorgen.
+                            Alles bleibt auf deinem Computer.
+                        </p>
+                        <div class="cta-group">
+                            <a href="https://github.com/aebionix/voxly-releases/releases/latest" class="btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                Kostenlos herunterladen
+                            </a>
+                            <a href="#how-it-works" class="btn-ghost">So funktioniert's →</a>
+                        </div>
+                        <p style="margin-top: 16px; font-size: 0.85rem; color: var(--stone);">
+                            Free Edition — keine Registrierung nötig
+                        </p>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="visual-card">
+                            <div class="waveform">
+                                <span></span><span></span><span></span><span></span><span></span>
+                                <span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                            <p class="visual-text">
+                                „Schreib mir bitte einen kurzen Text über das Wetter heute..."<span class="cursor"></span>
+                            </p>
+                            <div class="visual-badge">100% Offline</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="features" id="features">
             <div class="container">
+                <div class="section-header">
+                    <p class="section-label">Warum Voxly</p>
+                    <h2>Spracherkennung, neu gedacht</h2>
+                </div>
                 <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🔒</div>
-                        <h3>100% Privat</h3>
-                        <p>Alles läuft lokal auf deinem Computer. Keine Daten werden gesendet, keine Cloud-Verbindung nötig.</p>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                            </svg>
+                        </div>
+                        <h3>Absolute Privatsphäre</h3>
+                        <p>Deine Audiodaten verlassen niemals deinen Computer. Keine Cloud, keine Uploads, keine Kompromisse.</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                            </svg>
+                        </div>
                         <h3>Blitzschnell</h3>
-                        <p>Echtzeit-Transkription dank optimierter KI. Kein Warten auf Server-Antworten.</p>
+                        <p>Lokale KI bedeutet keine Latenz. Dein Text erscheint sofort, ohne auf Server zu warten.</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🎯</div>
-                        <h3>Einfach zu nutzen</h3>
-                        <p>Hotkey drücken, sprechen, loslassen. Der Text wird automatisch eingefügt.</p>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
+                            </svg>
+                        </div>
+                        <h3>Kinderleicht</h3>
+                        <p>Taste drücken, sprechen, loslassen. Der Text erscheint automatisch dort, wo dein Cursor steht.</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🌐</div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                            </svg>
+                        </div>
                         <h3>Mehrsprachig</h3>
-                        <p>Unterstützt Deutsch, Englisch und viele weitere Sprachen mit hoher Genauigkeit.</p>
+                        <p>Deutsch, Englisch, Französisch und dutzende weitere Sprachen — automatisch erkannt.</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📦</div>
-                        <h3>Alles dabei</h3>
-                        <p>Keine zusätzliche Installation nötig. Der Installer enthält alles was du brauchst.</p>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                            </svg>
+                        </div>
+                        <h3>Alles inklusive</h3>
+                        <p>Ein Installer, alles dabei. Keine Abhängigkeiten, keine Konfiguration, einfach starten.</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔄</div>
-                        <h3>Auto-Update</h3>
-                        <p>Automatische Updates halten deine App auf dem neuesten Stand.</p>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                            </svg>
+                        </div>
+                        <h3>Immer aktuell</h3>
+                        <p>Automatische Updates sorgen dafür, dass du immer die neueste Version nutzt.</p>
                     </div>
                 </div>
             </div>
@@ -430,48 +949,109 @@
 
         <section class="how-it-works" id="how-it-works">
             <div class="container">
-                <h2 class="section-title">So einfach geht's</h2>
-                <div class="steps">
+                <div class="section-header">
+                    <p class="section-label">Anleitung</p>
+                    <h2>In drei Schritten zum Text</h2>
+                </div>
+                <div class="steps-container">
                     <div class="step">
                         <div class="step-number">1</div>
-                        <h4>Hotkey drücken</h4>
-                        <p>Halte die rechte Strg-Taste gedrückt</p>
+                        <h3>Taste halten</h3>
+                        <p>Halte die rechte Strg-Taste gedrückt, um die Aufnahme zu starten.</p>
+                        <span class="step-key">RCtrl</span>
                     </div>
                     <div class="step">
                         <div class="step-number">2</div>
-                        <h4>Sprechen</h4>
-                        <p>Sag was du schreiben möchtest</p>
+                        <h3>Sprechen</h3>
+                        <p>Sag einfach, was du schreiben möchtest. Voxly hört zu.</p>
                     </div>
                     <div class="step">
                         <div class="step-number">3</div>
-                        <h4>Loslassen</h4>
-                        <p>Der Text wird automatisch eingefügt</p>
+                        <h3>Loslassen</h3>
+                        <p>Lass die Taste los — der Text wird automatisch eingefügt.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="privacy-section">
+        <section class="editions" id="editions">
             <div class="container">
-                <div class="privacy-box">
-                    <h2>🛡️ Deine Privatsphäre ist garantiert</h2>
-                    <p>
-                        Voxly nutzt OpenAI's Whisper-Technologie - aber komplett offline.
-                        Die KI läuft direkt auf deinem Computer. Keine Audiodaten verlassen jemals dein Gerät.
-                    </p>
-                    <div class="privacy-features">
-                        <div class="privacy-feature">
-                            <span>✓</span> Keine Cloud
-                        </div>
-                        <div class="privacy-feature">
-                            <span>✓</span> Keine Accounts
-                        </div>
-                        <div class="privacy-feature">
-                            <span>✓</span> Keine Telemetrie
-                        </div>
-                        <div class="privacy-feature">
-                            <span>✓</span> Funktioniert offline
-                        </div>
+                <div class="section-header">
+                    <p class="section-label">Editionen</p>
+                    <h2>Starte kostenlos</h2>
+                </div>
+                <div class="editions-grid">
+                    <div class="edition-card">
+                        <div class="edition-badge">Verfügbar</div>
+                        <h3>Free</h3>
+                        <p class="edition-price">CHF 0</p>
+                        <p class="edition-desc">Ideal zum Ausprobieren</p>
+                        <ul class="edition-features">
+                            <li>60 Aufnahmen pro Stunde</li>
+                            <li>Max. 30 Sekunden pro Aufnahme</li>
+                            <li>Alle Sprachen</li>
+                            <li>Keine Registrierung</li>
+                        </ul>
+                        <a href="https://github.com/aebionix/voxly-releases/releases/latest" class="btn-edition">Jetzt herunterladen</a>
+                    </div>
+                    <div class="edition-card edition-premium">
+                        <div class="edition-badge edition-badge-soon">Bald verfügbar</div>
+                        <h3>Premium</h3>
+                        <p class="edition-price">Preis folgt</p>
+                        <p class="edition-desc">Für Power-User</p>
+                        <ul class="edition-features">
+                            <li>Unbegrenzte Aufnahmen</li>
+                            <li>Keine Zeitlimits</li>
+                            <li>Alle Sprachen</li>
+                            <li>Prioritäts-Support</li>
+                        </ul>
+                        <span class="btn-edition btn-disabled">Benachrichtigung folgt</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="privacy">
+            <div class="container">
+                <div class="privacy-content">
+                    <div>
+                        <p class="section-label" style="color: rgba(250,247,242,0.5);">Datenschutz</p>
+                        <h2>Deine Daten gehören dir.</h2>
+                        <p class="privacy-description">
+                            Voxly nutzt OpenAIs Whisper-Technologie — vollständig lokal auf deinem Computer.
+                            Keine Internetverbindung erforderlich, keine Daten werden übertragen.
+                        </p>
+                        <ul class="privacy-list">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Keine Cloud-Anbindung
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Kein Account nötig
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Keine Telemetrie
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                100% Offline nutzbar
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="privacy-visual">
+                        <svg class="shield-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -480,12 +1060,15 @@
 
     <footer>
         <div class="container">
-            <div class="footer-links">
-                <a href="https://github.com/aebionix/voxly-releases">GitHub</a>
-                <a href="https://github.com/aebionix/voxly-releases/releases">Downloads</a>
-                <a href="https://github.com/aebionix/voxly-releases/issues">Support</a>
+            <div class="footer-content">
+                <span class="footer-logo">Voxly</span>
+                <div class="footer-links">
+                    <a href="https://github.com/aebionix/voxly-releases">GitHub</a>
+                    <a href="https://github.com/aebionix/voxly-releases/releases">Downloads</a>
+                    <a href="https://github.com/aebionix/voxly-releases/issues">Support</a>
+                </div>
+                <span class="footer-copy">© 2026 Aebionix</span>
             </div>
-            <p class="copyright">© 2026 Aebionix. Alle Rechte vorbehalten.</p>
         </div>
     </footer>
 </body>
