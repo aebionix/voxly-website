@@ -230,6 +230,38 @@
             transform: translateY(2px);
         }
 
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 32px;
+            background: transparent;
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 60px;
+            border: 2px solid var(--ink);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: var(--ink);
+            color: var(--cream);
+            box-shadow: 0 8px 32px rgba(28, 25, 23, 0.15);
+        }
+
+        .btn-secondary svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-secondary:hover svg {
+            transform: translateY(2px);
+        }
+
         .btn-ghost {
             color: var(--ink-light);
             text-decoration: none;
@@ -241,6 +273,12 @@
 
         .btn-ghost:hover {
             color: var(--ink);
+        }
+
+        .btn-size {
+            font-size: 0.75rem;
+            font-weight: 400;
+            opacity: 0.7;
         }
 
         .hero-note {
@@ -682,6 +720,27 @@
             background: var(--terracotta);
         }
 
+        .btn-edition-outline {
+            display: block;
+            text-align: center;
+            padding: 14px 24px;
+            background: transparent;
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 12px;
+            border: 2px solid rgba(120, 113, 108, 0.25);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-edition-outline:hover {
+            border-color: var(--ink);
+            background: var(--ink);
+            color: var(--cream);
+        }
+
         .btn-disabled {
             background: var(--stone);
             opacity: 0.6;
@@ -909,11 +968,19 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
-                            <span id="download-text">Kostenlos herunterladen</span>
+                            <span id="download-text">Vollständig</span>
+                            <span class="btn-size" id="download-size">~137 MB</span>
                         </a>
-                        <a href="#how-it-works" class="btn-ghost">So funktioniert's →</a>
+                        <a href="#" id="download-btn-compact" class="btn-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            <span>Kompakt</span>
+                            <span class="btn-size" id="download-size-compact">~73 MB</span>
+                        </a>
                     </div>
                     <p class="hero-note">Free Edition — keine Registrierung nötig <span id="version-badge" class="version-badge" style="display: none;"></span></p>
+                    <p class="hero-note" style="margin-top: 6px;">Vollständig = sofort einsatzbereit · Kompakt = Modell wird beim ersten Start gewählt</p>
                 </div>
                 <div class="hero-visual">
                     <div class="visual-card">
@@ -983,8 +1050,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                             </svg>
                         </div>
-                        <h3>Sofort startklar</h3>
-                        <p>Ein Installer, alles dabei. Keine zusätzlichen Downloads nötig, keine Konfiguration.</p>
+                        <h3>Zwei Varianten</h3>
+                        <p>Vollständig mit Sprachmodell (~137 MB) oder kompakt ohne (~73 MB). Bei der kompakten Version wählst du beim ersten Start dein bevorzugtes Modell.</p>
                     </div>
                     <div class="feature">
                         <span class="feature-badge feature-badge-optional">Optional</span>
@@ -1065,7 +1132,8 @@
                                 <span class="limit">Max. 30 Sek./Aufnahme</span>
                             </li>
                         </ul>
-                        <a href="#" id="download-btn-free" class="btn-edition">Jetzt herunterladen</a>
+                        <a href="#" id="download-btn-free" class="btn-edition">Vollständig herunterladen · ~137 MB</a>
+                        <a href="#" id="download-btn-free-compact" class="btn-edition-outline">Kompakt herunterladen · ~73 MB</a>
                     </div>
                     <div class="edition-card edition-premium">
                         <div class="edition-badge edition-badge-soon">Bald verfügbar</div>
@@ -1164,13 +1232,13 @@
                     <a href="https://github.com/aebionix/voxly-releases/releases">Downloads</a>
                     <a href="https://github.com/aebionix/voxly-releases/issues">Support</a>
                 </div>
-                <span class="footer-copy">© 2026 Aebionix</span>
+                <span class="footer-copy">&copy; 2026 Aebionix</span>
             </div>
         </div>
     </footer>
 
     <script>
-        // Fetch version and installer URL from update-info.json
+        // Fetch version and installer URLs from update-info.json
         (async function() {
             try {
                 const response = await fetch('https://raw.githubusercontent.com/aebionix/voxly-releases/main/update-info.json');
@@ -1183,28 +1251,35 @@
                     versionBadge.style.display = 'inline-block';
                 }
 
-                // Update download buttons with direct installer link
+                // Full installer URL
                 const installerUrl = data.installer_url ||
                     `https://github.com/aebionix/voxly-releases/releases/download/v${data.version}/Voxly-v${data.version}-Setup.exe`;
 
-                const downloadBtn = document.getElementById('download-btn');
-                const downloadBtnFree = document.getElementById('download-btn-free');
+                // Compact installer URL (without model)
+                const compactUrl = data.download_url_nomodel ||
+                    `https://github.com/aebionix/voxly-releases/releases/download/v${data.version}/Voxly-v${data.version}-Setup-NoModel.exe`;
 
-                if (downloadBtn) {
-                    downloadBtn.href = installerUrl;
-                }
-                if (downloadBtnFree) {
-                    downloadBtnFree.href = installerUrl;
-                }
+                // Hero buttons
+                const downloadBtn = document.getElementById('download-btn');
+                const downloadBtnCompact = document.getElementById('download-btn-compact');
+
+                if (downloadBtn) downloadBtn.href = installerUrl;
+                if (downloadBtnCompact) downloadBtnCompact.href = compactUrl;
+
+                // Editions buttons
+                const downloadBtnFree = document.getElementById('download-btn-free');
+                const downloadBtnFreeCompact = document.getElementById('download-btn-free-compact');
+
+                if (downloadBtnFree) downloadBtnFree.href = installerUrl;
+                if (downloadBtnFreeCompact) downloadBtnFreeCompact.href = compactUrl;
             } catch (error) {
                 console.error('Could not fetch version info:', error);
                 // Fallback to releases page
-                const downloadBtn = document.getElementById('download-btn');
-                const downloadBtnFree = document.getElementById('download-btn-free');
                 const fallbackUrl = 'https://github.com/aebionix/voxly-releases/releases/latest';
-
-                if (downloadBtn) downloadBtn.href = fallbackUrl;
-                if (downloadBtnFree) downloadBtnFree.href = fallbackUrl;
+                ['download-btn', 'download-btn-compact', 'download-btn-free', 'download-btn-free-compact'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.href = fallbackUrl;
+                });
             }
         })();
     </script>
